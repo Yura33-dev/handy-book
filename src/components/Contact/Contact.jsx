@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { HiUser } from 'react-icons/hi2';
 import { HiPhone } from 'react-icons/hi2';
-import { deleteContact } from '../../redux/contactsOps';
+import { deleteContact } from '../../redux/contacts/operations';
 
 import styles from './Contact.module.css';
 
