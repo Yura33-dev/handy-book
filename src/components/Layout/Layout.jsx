@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
-import Navigation from '../Navigation/Navigation';
+import AppBar from '../AppBar/AppBar';
 
 function Layout({ children }) {
   return (
     <>
-      <Navigation />
-
+      <AppBar />
       <main>{children}</main>
     </>
   );
