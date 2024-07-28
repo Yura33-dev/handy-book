@@ -2,31 +2,31 @@ import * as Yup from 'yup';
 
 export const registerSchema = Yup.object().shape({
   name: Yup.string()
-    .min(3, 'Too short')
-    .max(50, 'Too long')
-    .required('Name required to fill out'),
+    .min(2, 'Please, specify name in correct way')
+    .max(50, 'Please, specify name in correct way')
+    .required('Here should be your full name'),
   email: Yup.string()
-    .email('Invalid email address')
-    .min(2, 'Too short')
-    .max(40, 'Too long')
-    .required('Email number required to fill out'),
+    .email('Please, specify email in correct way')
+    .min(2, 'Please, specify email in correct way')
+    .max(40, 'Please, specify email in correct way')
+    .required('Here should be your email'),
   password: Yup.string()
-    .min(7, 'Too short')
-    .max(30, 'Too long')
-    .required('Password is necessary to fill out'),
+    .min(7, 'Password should have more characters')
+    .max(30, 'Password should have less characters')
+    .required('Here should be your password'),
   confirmPassword: Yup.string()
-    .required('You should comfirm your password')
-    .oneOf([Yup.ref('password')], 'Passwords don`t match'),
+    .required('Please, provide confirmation password')
+    .oneOf([Yup.ref('password')], 'Passwords should be match!'),
 });
 
 export const loginSchema = Yup.object().shape({
   email: Yup.string()
-    .email('Invalid email address')
-    .min(2, 'Too short')
-    .max(40, 'Too long')
-    .required('Email number required to fill out'),
+    .email('Please, specify email in correct way')
+    .min(2, 'Please, specify email in correct way')
+    .max(40, 'Please, specify email in correct way')
+    .required('Here should be your email'),
   password: Yup.string()
-    .min(7, 'Too short')
-    .max(30, 'Too long')
-    .required('Password is necessary to fill out'),
+    .min(7, 'Password should have more characters')
+    .max(30, 'Password should have less characters')
+    .required('Here should be your password'),
 });
