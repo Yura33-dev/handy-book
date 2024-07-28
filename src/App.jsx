@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -11,21 +11,27 @@ import ContactsPage from './pages/ContactsPage/ContactsPage';
 import { RestrictedRoute } from './RestrictedRoute';
 import { PrivateRoute } from './PrivateRoute';
 
-import { selectIsRefreshing } from './redux/auth/selectors';
+import { selectIsLoggedIn, selectIsRefreshing } from './redux/auth/selectors';
 import { refreshUser } from './redux/auth/operations';
+import TemporaryDrawer from './components/Drawer/Drawer';
 
 function App() {
+  const [activeSideBar, setActiveSideBar] = useState(false);
+
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
     dispatch(refreshUser());
   }, [dispatch]);
 
+  const toggleSideBar = () => setActiveSideBar(active => !active);
+
   return isRefreshing ? (
     <div>Refreshing user...</div>
   ) : (
-    <Layout>
+    <Layout onCloseSideBar={toggleSideBar}>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route
@@ -51,6 +57,13 @@ function App() {
         />
         <Route path="*" element={<div>Not found page</div>} />
       </Routes>
+
+      {isLoggedIn && (
+        <TemporaryDrawer
+          isActive={activeSideBar}
+          onCloseSideBar={toggleSideBar}
+        />
+      )}
     </Layout>
   );
 }
