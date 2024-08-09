@@ -1,13 +1,13 @@
 import AuthLabel from '../../components/ui/AuthLabel/AuthLabel';
 import AuthForm from '../../components/AuthForm/AuthForm';
 import OppositeOffer from '../../components/ui/OppositeOffer/OppositeOffer';
-import { useErrorMessage } from '../../helpers/hooks/useErrorMessage';
+import { useErrorMessage } from '../../helpers/hooks/useErrorMessage.js';
 
 import css from './LoginPage.module.css';
 import ErrorMessage from '../../components/ui/ErrorMessage/ErrorMessage';
 
 function LoginPage() {
-  const { errorMessage } = useErrorMessage();
+  const { errorMessage } = useErrorMessage('LoginPage');
 
   return (
     <section className={css.loginSection}>

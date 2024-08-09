@@ -6,8 +6,8 @@ function ErrorMessage({ message }) {
     <Typography
       paragraph
       sx={{
-        marginTop: 1,
-        fontSize: { xs: 12, sm: 16 },
+        marginTop: 2,
+        fontSize: { xs: 12, sm: 14 },
         textAlign: 'center',
         color: 'error.dark',
       }}
