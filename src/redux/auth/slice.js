@@ -14,6 +14,11 @@ export const authSlice = createSlice({
     isError: '',
     isLoading: false,
   },
+  reducers: {
+    resetAuthError: state => {
+      state.isError = '';
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(register.pending, state => {
@@ -66,5 +71,7 @@ export const authSlice = createSlice({
       });
   },
 });
+
+export const { resetAuthError } = authSlice.actions;
 
 export const authReducer = authSlice.reducer;
