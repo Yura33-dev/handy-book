@@ -5,6 +5,7 @@ import {
   editContact,
   fetchContacts,
 } from './operations';
+import { logout } from '../auth/operations';
 
 const handlePending = state => {
   state.loading = true;
@@ -52,6 +53,11 @@ export const contactsSlice = createSlice({
           contact => contact.id === action.payload.id
         );
         state.items[index] = action.payload;
+      })
+      .addCase(logout.fulfilled, state => {
+        state.items = [];
+        state.loading = false;
+        state.error = null;
       });
   },
 });
