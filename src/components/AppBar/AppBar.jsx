@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import MobileMenuBtn from '../ui/MobileMenuBtn/MobileMenuBtn';
 import MainHeader from '../ui/MainHeader/MainHeader';
-import { useAvatar } from './hooks/useAvatar';
+import { useAvatar } from '../../helpers/hooks/useAvatar';
 
 function AppBar({ onCloseSideBar }) {
   const isLoggedIn = useSelector(selectIsLoggedIn);
