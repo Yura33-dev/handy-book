@@ -7,7 +7,7 @@ import { selectIsLoading } from '../../redux/auth/selectors';
 import {
   loginSchema,
   registerSchema,
-} from '../../helpers/Schemas/authSchemasValidation';
+} from '../../helpers/schemas/authSchemasValidation';
 import {
   Box,
   Button,

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { ModalWindowContext } from '../../../context/ModalWindow/modal.context';
+import { ModalWindowContext } from '../../../helpers/context/modal.context';
 
 import { Backdrop, Box, Fade, Modal, Typography } from '@mui/material';
 

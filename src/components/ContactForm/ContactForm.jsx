@@ -4,8 +4,8 @@ import { useFormik } from 'formik';
 import toast from 'react-hot-toast';
 import { addContact } from '../../redux/contacts/operations';
 import { selectLoading } from '../../redux/contacts/selectors';
-import { ModalWindowContext } from '../../context/ModalWindow/modal.context';
-import { addContactSchema } from '../../helpers/Schemas/addContactSchemaValidation';
+import { ModalWindowContext } from '../../helpers/context/modal.context';
+import { addContactSchema } from '../../helpers/schemas/addContactSchemaValidation';
 import AlertMessage from '../ui/AlertMessage/AlertMessage';
 
 import {

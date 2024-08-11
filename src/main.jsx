@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { BrowserRouter } from 'react-router-dom';
 import { store, persistor } from './redux/store.js';
-import { ModalProvider } from './context/ModalWindow/modal.context.jsx';
+import { ModalProvider } from './helpers/context/modal.context.jsx';
 
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 
