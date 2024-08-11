@@ -1,65 +1,147 @@
-import { useId } from 'react';
+import { useContext, useId } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
+import { useFormik } from 'formik';
+import toast from 'react-hot-toast';
 import { addContact } from '../../redux/contacts/operations';
 import { selectLoading } from '../../redux/contacts/selectors';
+import { ModalWindowContext } from '../../context/ModalWindow/modal.context';
+import { addContactSchema } from '../../helpers/Schemas/addContactSchemaValidation';
+import AlertMessage from '../ui/AlertMessage/AlertMessage';
 
-import styles from './ContactForm.module.css';
-
-const addContactSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(3, 'Too short')
-    .max(50, 'Too long')
-    .required('Name required to fill out'),
-  phone: Yup.string()
-    .min(7, 'Too short')
-    .max(9, 'Too long')
-    .required('Phone number required to fill out'),
-});
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  CircularProgress,
+  InputAdornment,
+  TextField,
+  useMediaQuery,
+} from '@mui/material';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 
 function ContactForm() {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectLoading);
 
+  const { handleClose } = useContext(ModalWindowContext);
+
   const nameFieldId = useId();
-  const phoneFieldId = useId();
+  const numberFieldId = useId();
 
-  const initValues = { name: '', phone: '' };
+  const initValues = { name: '', number: '' };
 
-  function handleSubmit(contact, actions) {
-    dispatch(addContact(contact));
-    actions.resetForm();
+  const formik = useFormik({
+    initialValues: initValues,
+    validationSchema: addContactSchema,
+    onSubmit: handleSubmit,
+  });
+
+  async function handleSubmit(contact, actions) {
+    try {
+      await dispatch(addContact(contact)).unwrap();
+      actions.resetForm();
+      toast.custom(<AlertMessage message="Contact has been added" />);
+      handleClose();
+    } catch (error) {
+      toast.custom(
+        <AlertMessage
+          severity="error"
+          message="Something went wrong. Please, try again!"
+        />
+      );
+    }
   }
 
+  const isScreenXS = useMediaQuery('(max-width:600px)');
+  const circularProgressProp = {
+    size: isScreenXS ? 25 : 40,
+  };
+
   return (
-    <Formik
-      initialValues={initValues}
-      onSubmit={handleSubmit}
-      validationSchema={addContactSchema}
+    <Box
+      component="form"
+      onSubmit={formik.handleSubmit}
+      autoComplete="off"
+      sx={{
+        mt: 4,
+        flexGrow: '1',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+      }}
     >
-      <Form className={styles.form}>
-        <div className={styles.fieldset}>
-          <label htmlFor={nameFieldId}>Name</label>
-          <Field id={nameFieldId} name="name" type="text" />
-          <ErrorMessage name="name" component="span" className={styles.error} />
-        </div>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <TextField
+          id={nameFieldId}
+          name="name"
+          label="Full name"
+          type="text"
+          value={formik.values.name}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.name && Boolean(formik.errors.name)}
+          helperText={formik.touched.name && formik.errors.name}
+          required
+          fullWidth
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <AccountCircleOutlinedIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
 
-        <div className={styles.fieldset}>
-          <label htmlFor={phoneFieldId}>Phone</label>
-          <Field id={phoneFieldId} name="phone" type="text" />
-          <ErrorMessage
-            name="phone"
-            component="span"
-            className={styles.error}
-          />
-        </div>
+        <TextField
+          id={numberFieldId}
+          name="number"
+          label="Phone number"
+          type="text"
+          value={formik.values.number}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.number && Boolean(formik.errors.number)}
+          helperText={formik.touched.number && formik.errors.number}
+          required
+          fullWidth
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <LocalPhoneOutlinedIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
 
-        <button type="submit" disabled={isLoading}>
-          Add contact
-        </button>
-      </Form>
-    </Formik>
+      <ButtonGroup
+        orientation="vertical"
+        disabled={isLoading}
+        sx={{ gap: '10px' }}
+      >
+        <Button
+          color="primary"
+          variant="contained"
+          fullWidth
+          type="submit"
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <CircularProgress
+              {...circularProgressProp}
+              sx={{ color: 'secondary.main' }}
+            />
+          ) : (
+            'Add contact'
+          )}
+        </Button>
+
+        <Button variant="text" onClick={handleClose}>
+          Back
+        </Button>
+      </ButtonGroup>
+    </Box>
   );
 }
 

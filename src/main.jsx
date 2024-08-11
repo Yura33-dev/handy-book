@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { BrowserRouter } from 'react-router-dom';
 import { store, persistor } from './redux/store.js';
+import { ModalProvider } from './context/ModalWindow/modal.context.jsx';
 
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 
@@ -14,8 +15,6 @@ import '@fontsource/roboto/700.css';
 import './index.css';
 
 import App from './App.jsx';
-
-import './index.css';
 
 const theme = createTheme({
   palette: {
@@ -53,7 +52,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <PersistGate loading={null} persistor={persistor}>
           <CssBaseline />
           <ThemeProvider theme={theme}>
-            <App />
+            <ModalProvider>
+              <App />
+            </ModalProvider>
           </ThemeProvider>
         </PersistGate>
       </BrowserRouter>

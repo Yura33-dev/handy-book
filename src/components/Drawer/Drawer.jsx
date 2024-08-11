@@ -1,8 +1,11 @@
-import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+import { logout } from '../../redux/auth/operations';
 
 import {
   Drawer,
+  Link as MuiLink,
   List,
   ListItem,
   ListItemButton,
@@ -11,8 +14,6 @@ import {
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { ListItemIcon } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../redux/auth/operations';
 
 const TemporaryDrawer = ({ isActive, onCloseSideBar }) => {
   const dispatch = useDispatch();
@@ -25,12 +26,19 @@ const TemporaryDrawer = ({ isActive, onCloseSideBar }) => {
 
   const DrawerList = (
     <List sx={{ width: { xs: 200, md: 300 } }} onClick={onCloseSideBar}>
-      <ListItem disablePadding>
+      <ListItem disablePadding divider>
         <ListItemButton>
           <ListItemIcon>
             <ContactPhoneIcon />
           </ListItemIcon>
-          <ListItemText primary="My contacts" />
+          <MuiLink
+            component={RouterLink}
+            to="/contacts"
+            color="text.primary"
+            underline="none"
+          >
+            <ListItemText>My contacts</ListItemText>
+          </MuiLink>
         </ListItemButton>
       </ListItem>
 
