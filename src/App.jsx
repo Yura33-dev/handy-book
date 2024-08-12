@@ -14,6 +14,7 @@ import { PrivateRoute } from './PrivateRoute';
 import { selectIsLoggedIn, selectIsRefreshing } from './redux/auth/selectors';
 import { refreshUser } from './redux/auth/operations';
 import TemporaryDrawer from './components/Drawer/Drawer';
+import AppLoader from './components/ui/AppLoader/AppLoader';
 
 function App() {
   const [activeSideBar, setActiveSideBar] = useState(false);
@@ -29,7 +30,7 @@ function App() {
   const toggleSideBar = () => setActiveSideBar(active => !active);
 
   return isRefreshing ? (
-    <div>Refreshing user...</div>
+    <AppLoader />
   ) : (
     <Layout onCloseSideBar={toggleSideBar}>
       <Routes>
