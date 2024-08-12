@@ -47,6 +47,7 @@ export const contactsSlice = createSlice({
       })
       .addCase(deleteContact.rejected, handleRejected)
       .addCase(editContact.pending, handlePending)
+      .addCase(editContact.rejected, handleRejected)
       .addCase(editContact.fulfilled, (state, action) => {
         state.loading = false;
         state.error = '';

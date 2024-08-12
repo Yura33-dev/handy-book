@@ -5,6 +5,13 @@ export const selectContacts = state => state.contacts.items;
 export const selectLoading = state => state.contacts.loading;
 export const selectError = state => state.contacts.error;
 
+export const selectContactById = contactId =>
+  createSelector([selectContacts], contacts => {
+    const contact = contacts.filter(contact => contact.id === contactId);
+
+    return contact;
+  });
+
 export const selectFilteredContacts = createSelector(
   [selectContacts, selectNameFilter],
   (contacts, filterName) => {
