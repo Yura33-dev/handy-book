@@ -1,19 +1,18 @@
 import PropTypes from 'prop-types';
 import { Typography } from '@mui/material';
 
-function TypographyHeader({ title }) {
+function TypographyHeader({ variant, title, styles = null }) {
   return (
-    <Typography
-      variant="h2"
-      sx={{ my: 2, fontSize: { xs: 28, sm: 40, md: 48 } }}
-    >
+    <Typography variant={variant} sx={styles}>
       {title}
     </Typography>
   );
 }
 
 TypographyHeader.propTypes = {
+  variant: PropTypes.string,
   title: PropTypes.string,
+  styles: PropTypes.object,
 };
 
 export default TypographyHeader;
