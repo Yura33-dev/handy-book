@@ -6,6 +6,7 @@ import { addContact } from '../../redux/contacts/operations';
 import { selectLoading } from '../../redux/contacts/selectors';
 import { ModalWindowContext } from '../../helpers/context/modal.context';
 import { addContactSchema } from '../../helpers/schemas/addContactSchemaValidation';
+import { MODAL_NEW_CONTACT } from '../../helpers/constants/modalConstants';
 import AlertMessage from '../ui/AlertMessage/AlertMessage';
 
 import {
@@ -20,11 +21,11 @@ import {
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 
-function ContactForm() {
+function ContactNewForm() {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectLoading);
 
-  const { handleClose } = useContext(ModalWindowContext);
+  const { handleModalClose } = useContext(ModalWindowContext);
 
   const nameFieldId = useId();
   const numberFieldId = useId();
@@ -42,7 +43,7 @@ function ContactForm() {
       await dispatch(addContact(contact)).unwrap();
       actions.resetForm();
       toast.custom(<AlertMessage message="Contact has been added" />);
-      handleClose();
+      handleModalClose(MODAL_NEW_CONTACT);
     } catch (error) {
       toast.custom(
         <AlertMessage
@@ -71,7 +72,7 @@ function ContactForm() {
         justifyContent: 'space-between',
       }}
     >
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
         <TextField
           id={nameFieldId}
           name="name"
@@ -118,15 +119,9 @@ function ContactForm() {
       <ButtonGroup
         orientation="vertical"
         disabled={isLoading}
-        sx={{ gap: '10px' }}
+        sx={{ gap: '10px', mt: 3 }}
       >
-        <Button
-          color="primary"
-          variant="contained"
-          fullWidth
-          type="submit"
-          disabled={isLoading}
-        >
+        <Button color="primary" variant="contained" fullWidth type="submit">
           {isLoading ? (
             <CircularProgress
               {...circularProgressProp}
@@ -137,7 +132,10 @@ function ContactForm() {
           )}
         </Button>
 
-        <Button variant="text" onClick={handleClose}>
+        <Button
+          variant="text"
+          onClick={() => handleModalClose(MODAL_NEW_CONTACT)}
+        >
           Back
         </Button>
       </ButtonGroup>
@@ -145,4 +143,4 @@ function ContactForm() {
   );
 }
 
-export default ContactForm;
+export default ContactNewForm;
