@@ -21,6 +21,16 @@ export function useAvatar(userName) {
     return color;
   }
 
+  function generateUserSign(string) {
+    const splitedName = string.toUpperCase().split(' ');
+
+    if (splitedName.length === 1) {
+      return `${splitedName[0][0]}${splitedName[0][splitedName[0].length - 1]}`;
+    } else {
+      return `${splitedName[0][0]}${splitedName[splitedName.length - 1][0]}`;
+    }
+  }
+
   const avatar = {
     sx: {
       bgcolor: stringToColor(userName),
@@ -28,9 +38,7 @@ export function useAvatar(userName) {
       width: { xs: 30, md: 40 },
       height: { xs: 30, md: 40 },
     },
-    children: userName
-      ? `${userName.split(' ')[0][0]}${userName.split(' ')[1][0]}`
-      : 'default',
+    children: userName ? generateUserSign(userName) : 'null',
   };
 
   return { avatar };
