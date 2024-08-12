@@ -1,5 +1,7 @@
 import { useContext, useState } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { selectLoading } from '../../redux/contacts/selectors';
 import { useAvatar } from '../../helpers/hooks/useAvatar';
 import { ModalWindowContext } from '../../helpers/context/modal.context';
 import {
@@ -16,15 +18,11 @@ import {
   ListItemText,
   Menu,
   MenuItem,
+  Skeleton,
 } from '@mui/material';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-
-// const temporaryStyles = {
-//   sx: { backgroundColor: '#8322b9' },
-//   children: 'YK',
-// };
 
 function ContactCard({ name, number, id }) {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -51,18 +49,49 @@ function ContactCard({ name, number, id }) {
   };
 
   const { avatar } = useAvatar(name);
+  const isLoading = useSelector(selectLoading);
 
   return (
     <Card variant="outlined" sx={{ flex: '1 1 auto' }}>
       <CardHeader
-        avatar={<Avatar {...avatar} aria-label="recipe" alt={name} />}
-        action={
-          <IconButton aria-label="settings" onClick={handleClick}>
-            <MoreVertOutlinedIcon />
-          </IconButton>
+        avatar={
+          isLoading ? (
+            <Skeleton
+              animation="wave"
+              variant="circular"
+              width={40}
+              height={40}
+            />
+          ) : (
+            <Avatar {...avatar} aria-label="recipe" alt={name} />
+          )
         }
-        title={name}
-        subheader={number}
+        action={
+          isLoading ? null : (
+            <IconButton aria-label="settings" onClick={handleClick}>
+              <MoreVertOutlinedIcon />
+            </IconButton>
+          )
+        }
+        title={
+          isLoading ? (
+            <Skeleton
+              animation="wave"
+              height={10}
+              width="80%"
+              style={{ marginBottom: 6 }}
+            />
+          ) : (
+            name
+          )
+        }
+        subheader={
+          isLoading ? (
+            <Skeleton animation="wave" height={10} width="40%" />
+          ) : (
+            number
+          )
+        }
         sx={{ overflow: 'hidden' }}
       />
 

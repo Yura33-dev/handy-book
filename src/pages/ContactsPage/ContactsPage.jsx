@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
 import { fetchContacts } from '../../redux/contacts/operations';
 import { selectLoading } from '../../redux/contacts/selectors';
+
 import { ModalWindowContext } from '../../helpers/context/modal.context';
 import {
   MODAL_DELETE_CONTACT,
@@ -15,20 +16,19 @@ import ContactList from '../../components/ContactList/ContactList';
 import ContactEditForm from '../../components/ContactEditForm/ContactEditForm';
 import ContactDeleteForm from '../../components/ContactDeleteForm/ContactDeleteForm';
 import TypographyHeader from '../../components/ui/TypographyHeader/TypographyHeader';
+import Filter from '../../components/Filter/Filter';
 
 import { Button } from '@mui/material';
 import PersonAddAlt1OutlinedIcon from '@mui/icons-material/PersonAddAlt1Outlined';
-import Filter from '../../components/Filter/Filter';
 
 function ContactsPage() {
   const dispatch = useDispatch();
+  const isLoading = useSelector(selectLoading);
+  const { handleModalOpen } = useContext(ModalWindowContext);
 
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
-
-  const { isLoading } = useSelector(selectLoading);
-  const { handleModalOpen } = useContext(ModalWindowContext);
 
   return (
     <>
@@ -39,6 +39,7 @@ function ContactsPage() {
       />
       <Filter />
       <ContactList />
+
       <Button
         variant="contained"
         startIcon={<PersonAddAlt1OutlinedIcon />}
