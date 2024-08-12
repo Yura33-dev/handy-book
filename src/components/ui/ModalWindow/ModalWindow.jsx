@@ -13,22 +13,21 @@ const style = {
   maxWidth: { sm: '400px' },
   bgcolor: 'background.paper',
   boxShadow: 24,
-  padding: '10px 15px',
-  minHeight: '360px',
+  padding: '15px',
   borderRadius: '10px',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-start',
 };
 
-function ModalWindow({ children, title }) {
-  const { open, handleClose } = useContext(ModalWindowContext);
+function ModalWindow({ children, title, modalType }) {
+  const { isModalOpen, handleModalClose } = useContext(ModalWindowContext);
 
   return (
     <Modal
       aria-labelledby="transition-modal-title"
-      open={open}
-      onClose={handleClose}
+      open={isModalOpen(modalType)}
+      onClose={() => handleModalClose(modalType)}
       closeAfterTransition
       slots={{ backdrop: Backdrop }}
       slotProps={{
@@ -37,9 +36,13 @@ function ModalWindow({ children, title }) {
         },
       }}
     >
-      <Fade in={open}>
+      <Fade in={isModalOpen(modalType)}>
         <Box sx={style}>
-          <Typography id="transition-modal-title" variant="h6">
+          <Typography
+            id="transition-modal-title"
+            variant="h6"
+            sx={{ flex: '0 0 auto' }}
+          >
             {title}
           </Typography>
 
@@ -53,6 +56,7 @@ function ModalWindow({ children, title }) {
 ModalWindow.propTypes = {
   children: PropTypes.element,
   title: PropTypes.string,
+  modalType: PropTypes.string,
 };
 
 export default ModalWindow;
