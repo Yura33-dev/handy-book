@@ -3,6 +3,7 @@ import { selectFilterValue } from '../filters/selectors';
 
 export const selectContacts = state => state.contacts.items;
 export const selectLoading = state => state.contacts.loading;
+export const selectIsContactsFetching = state => state.contacts.isFetching;
 export const selectError = state => state.contacts.error;
 
 export const selectContactById = contactId =>
