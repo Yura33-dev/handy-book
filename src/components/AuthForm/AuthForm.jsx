@@ -4,10 +4,7 @@ import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
 import { login, register } from '../../redux/auth/operations';
 import { selectIsLoading } from '../../redux/auth/selectors';
-import {
-  loginSchema,
-  registerSchema,
-} from '../../helpers/schemas/authSchemasValidation.js';
+
 import {
   Box,
   Button,
@@ -22,6 +19,11 @@ import AlternateEmailOutlinedIcon from '@mui/icons-material/AlternateEmailOutlin
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+
+import {
+  loginSchema,
+  registerSchema,
+} from '../../helpers/schemas/authSchemasValidation';
 
 function AuthForm({ authType }) {
   const dispatch = useDispatch();
