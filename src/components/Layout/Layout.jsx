@@ -6,9 +6,7 @@ function Layout({ onCloseSideBar, children }) {
   return (
     <>
       <AppBar onCloseSideBar={onCloseSideBar} />
-      <Container maxWidth="lg">
-        <main>{children}</main>
-      </Container>
+      <main>{children}</main>
     </>
   );
 }

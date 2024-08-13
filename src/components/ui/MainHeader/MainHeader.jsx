@@ -34,7 +34,7 @@ function MainHeader() {
             textTransform: 'uppercase',
           }}
         >
-          Contacts book
+          HandyBook
         </MuiLink>
       </Typography>
     </Stack>
