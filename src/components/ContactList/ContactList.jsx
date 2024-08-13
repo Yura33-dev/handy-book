@@ -14,6 +14,7 @@ import {
   Stack,
   useMediaQuery,
 } from '@mui/material';
+import TypographyHeader from '../ui/TypographyHeader/TypographyHeader';
 
 function ContactList() {
   const contacts = useSelector(selectFilteredContacts);
@@ -52,6 +53,20 @@ function ContactList() {
 
     return cardSkeletons;
   };
+
+  if (contacts.length <= 0) {
+    return (
+      <TypographyHeader
+        variant="h3"
+        title="There is no contacts"
+        styles={{
+          textAlign: 'center',
+          fontSize: { xs: '1.5rem', sm: '2.5rem', md: '3rem' },
+          my: 5,
+        }}
+      />
+    );
+  }
 
   return (
     <>

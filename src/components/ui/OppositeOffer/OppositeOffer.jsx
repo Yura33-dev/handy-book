@@ -4,25 +4,27 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { resetAuthError } from '../../../redux/auth/slice';
 
-function OppositeOffer({ isRegistered }) {
+function OppositeOffer({ isRegistered, style = null }) {
   const dispatch = useDispatch();
 
   const displayedTextQuestion = isRegistered
-    ? 'Already have account?'
+    ? 'Already have an account?'
     : 'Have no account yet?';
-  const displayedTextOffer = isRegistered
-    ? 'Login in account.'
-    : 'Register now!';
+  const displayedTextOffer = isRegistered ? 'Login.' : 'Register now!';
 
   return (
     <Typography
       paragraph
-      sx={{
-        fontSize: { xs: 13 },
-        marginTop: { xs: 2 },
-        textAlign: { xs: 'center' },
-        color: 'text.secondary',
-      }}
+      sx={
+        style
+          ? style
+          : {
+              fontSize: { xs: 13, md: 15 },
+              marginTop: { xs: 2 },
+              textAlign: { xs: 'center' },
+              color: 'text.secondary',
+            }
+      }
     >
       {displayedTextQuestion}{' '}
       <MuiLink
@@ -40,6 +42,7 @@ function OppositeOffer({ isRegistered }) {
 
 OppositeOffer.propTypes = {
   isRegistered: PropTypes.bool,
+  style: PropTypes.object,
 };
 
 export default OppositeOffer;
