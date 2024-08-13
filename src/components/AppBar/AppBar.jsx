@@ -19,40 +19,38 @@ function AppBar({ onCloseSideBar }) {
   const { avatar } = useAvatar(user.name);
 
   return (
-    <>
-      <MuiAppBar position="static">
-        <Container maxWidth="lg">
-          <Toolbar
-            sx={{
-              padding: { xs: '12px 0 12px 0' },
-            }}
-          >
-            {isLoggedIn && <MobileMenuBtn onCloseSideBar={onCloseSideBar} />}
+    <MuiAppBar position="static">
+      <Container maxWidth="lg">
+        <Toolbar
+          sx={{
+            padding: { xs: '12px 0 12px 0' },
+          }}
+        >
+          {isLoggedIn && <MobileMenuBtn onCloseSideBar={onCloseSideBar} />}
 
-            <MainHeader />
+          <MainHeader />
 
-            {isLoggedIn ? (
-              <Avatar {...avatar} />
-            ) : (
-              <MuiLink
-                component={RouterLink}
-                variant="body2"
-                to="/login"
-                color="primary.contrastText"
-                underline="none"
-                sx={{
-                  textTransform: 'uppercase',
-                  fontWeight: 500,
-                  fontSize: { xs: 14, sm: 16 },
-                }}
-              >
-                Login
-              </MuiLink>
-            )}
-          </Toolbar>
-        </Container>
-      </MuiAppBar>
-    </>
+          {isLoggedIn ? (
+            <Avatar {...avatar} />
+          ) : (
+            <MuiLink
+              component={RouterLink}
+              variant="body2"
+              to="/login"
+              color="primary.contrastText"
+              underline="none"
+              sx={{
+                textTransform: 'uppercase',
+                fontWeight: 500,
+                fontSize: { xs: 14, sm: 16 },
+              }}
+            >
+              Login
+            </MuiLink>
+          )}
+        </Toolbar>
+      </Container>
+    </MuiAppBar>
   );
 }
 

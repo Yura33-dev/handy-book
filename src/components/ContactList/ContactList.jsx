@@ -54,7 +54,7 @@ function ContactList() {
     return cardSkeletons;
   };
 
-  if (contacts.length <= 0) {
+  if (contacts.length <= 0 && !isContactsFetching) {
     return (
       <TypographyHeader
         variant="h3"

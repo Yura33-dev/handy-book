@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import AppBar from '../AppBar/AppBar';
-import { Container } from '@mui/material';
 
 function Layout({ onCloseSideBar, children }) {
   return (
@@ -12,7 +11,7 @@ function Layout({ onCloseSideBar, children }) {
 }
 
 Layout.propTypes = {
-  children: PropTypes.array,
+  children: PropTypes.object,
   onCloseSideBar: PropTypes.func,
 };
 
