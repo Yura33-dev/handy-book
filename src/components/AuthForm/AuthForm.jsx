@@ -19,11 +19,10 @@ import AlternateEmailOutlinedIcon from '@mui/icons-material/AlternateEmailOutlin
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-
 import {
   loginSchema,
   registerSchema,
-} from '../../helpers/schemas/authSchemasValidation';
+} from '../../helpers/schemasValidation/authSchemasValidation';
 
 function AuthForm({ authType }) {
   const dispatch = useDispatch();
