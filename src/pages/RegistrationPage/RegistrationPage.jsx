@@ -3,14 +3,20 @@ import AuthLabel from '../../components/ui/AuthLabel/AuthLabel';
 import ErrorMessage from '../../components/ui/ErrorMessage/ErrorMessage';
 import OppositeOffer from '../../components/ui/OppositeOffer/OppositeOffer';
 import { useErrorMessage } from '../../helpers/hooks/useErrorMessage';
-
-import css from './RegistrationPage.module.css';
+import { Box } from '@mui/material';
 
 function RegistrationPage() {
   const { errorMessage } = useErrorMessage();
 
   return (
-    <section className={css.registerSection}>
+    <Box
+      component="section"
+      sx={{
+        py: '1rem',
+        backgroundColor: 'background.default',
+        minHeight: '100vh',
+      }}
+    >
       <AuthLabel textLabel="Sign up" />
 
       <AuthForm authType="Register" />
@@ -18,7 +24,7 @@ function RegistrationPage() {
       {errorMessage && <ErrorMessage message={errorMessage} />}
 
       <OppositeOffer isRegistered={true} />
-    </section>
+    </Box>
   );
 }
 

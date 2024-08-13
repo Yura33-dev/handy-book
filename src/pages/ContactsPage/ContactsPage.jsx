@@ -18,7 +18,7 @@ import ContactDeleteForm from '../../components/ContactDeleteForm/ContactDeleteF
 import TypographyHeader from '../../components/ui/TypographyHeader/TypographyHeader';
 import Filter from '../../components/Filter/Filter';
 
-import { Button } from '@mui/material';
+import { Box, Button, Container } from '@mui/material';
 import PersonAddAlt1OutlinedIcon from '@mui/icons-material/PersonAddAlt1Outlined';
 
 function ContactsPage() {
@@ -31,39 +31,48 @@ function ContactsPage() {
   }, [dispatch]);
 
   return (
-    <>
-      <TypographyHeader
-        variant="h2"
-        title="The list of contacts"
-        styles={{ my: 2, fontSize: { xs: 28, sm: 40, md: 48 } }}
-      />
-      <Filter />
-      <ContactList />
+    <Box
+      component="section"
+      sx={{
+        py: '1rem',
+        backgroundColor: 'background.default',
+        minHeight: '100vh',
+      }}
+    >
+      <Container>
+        <TypographyHeader
+          variant="h2"
+          title="The list of contacts"
+          styles={{ mb: 2, fontSize: { xs: 28, sm: 40, md: 48 } }}
+        />
+        <Filter />
+        <ContactList />
 
-      <Button
-        variant="contained"
-        startIcon={<PersonAddAlt1OutlinedIcon />}
-        sx={{ display: 'flex', margin: '15px auto' }}
-        onClick={() => handleModalOpen(MODAL_NEW_CONTACT)}
-        disabled={isLoading}
-      >
-        new contact
-      </Button>
+        <Button
+          variant="contained"
+          startIcon={<PersonAddAlt1OutlinedIcon />}
+          sx={{ display: 'flex', margin: '15px auto' }}
+          onClick={() => handleModalOpen(MODAL_NEW_CONTACT)}
+          disabled={isLoading}
+        >
+          new contact
+        </Button>
 
-      <ModalWindow title="New" modalType={MODAL_NEW_CONTACT}>
-        <ContactNewForm />
-      </ModalWindow>
+        <ModalWindow title="New" modalType={MODAL_NEW_CONTACT}>
+          <ContactNewForm />
+        </ModalWindow>
 
-      <ModalWindow title="Edit" modalType={MODAL_EDIT_CONTACT}>
-        <ContactEditForm />
-      </ModalWindow>
+        <ModalWindow title="Edit" modalType={MODAL_EDIT_CONTACT}>
+          <ContactEditForm />
+        </ModalWindow>
 
-      <ModalWindow title="Delete" modalType={MODAL_DELETE_CONTACT}>
-        <ContactDeleteForm />
-      </ModalWindow>
+        <ModalWindow title="Delete" modalType={MODAL_DELETE_CONTACT}>
+          <ContactDeleteForm />
+        </ModalWindow>
 
-      <Toaster />
-    </>
+        <Toaster />
+      </Container>
+    </Box>
   );
 }
 
