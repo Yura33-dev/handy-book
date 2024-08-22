@@ -25,7 +25,10 @@ export const store = configureStore({
   reducer: {
     contacts: contactsReducer,
     filters: filterReducer,
-    auth: persistReducer(persistConfig, authReducer),
+    auth: persistReducer<ReturnType<typeof authReducer>>(
+      persistConfig,
+      authReducer
+    ),
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
@@ -36,3 +39,6 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

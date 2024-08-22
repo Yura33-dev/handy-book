@@ -1,19 +1,22 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { login, logout, refreshUser, register } from './operations';
+import { IAuthState } from './types/authTypes';
+
+const initialState: IAuthState = {
+  user: {
+    name: null,
+    email: null,
+  },
+  token: null,
+  isLoggedIn: null,
+  isRefreshing: null,
+  isError: '',
+  isLoading: false,
+};
 
 export const authSlice = createSlice({
   name: 'auth',
-  initialState: {
-    user: {
-      name: null,
-      email: null,
-    },
-    token: null,
-    isLoggedIn: null,
-    isRefreshing: null,
-    isError: '',
-    isLoading: false,
-  },
+  initialState,
   reducers: {
     resetAuthError: state => {
       state.isError = '';
@@ -32,7 +35,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(register.rejected, (state, action) => {
-        state.isError = action.payload;
+        state.isError = action.payload ?? '';
         state.isLoading = false;
       })
       .addCase(login.pending, state => {
@@ -47,7 +50,7 @@ export const authSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = action.payload;
+        state.isError = action.payload ?? '';
       })
       .addCase(logout.pending, state => {
         state.isLoading = true;
