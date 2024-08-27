@@ -1,8 +1,11 @@
 import { Box, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import PropTypes from 'prop-types';
 
-function AuthLabel({ textLabel }) {
+type AuthLabelProps = {
+  textLabel: string;
+};
+
+function AuthLabel({ textLabel }: AuthLabelProps) {
   return (
     <>
       <Box
@@ -26,9 +29,5 @@ function AuthLabel({ textLabel }) {
     </>
   );
 }
-
-AuthLabel.propTypes = {
-  textLabel: PropTypes.string,
-};
 
 export default AuthLabel;

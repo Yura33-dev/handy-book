@@ -1,15 +1,12 @@
 import { useContext, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../helpers/hooks/reduxHooks';
 import { Toaster } from 'react-hot-toast';
 import { fetchContacts } from '../../redux/contacts/operations';
 import { selectLoading } from '../../redux/contacts/selectors';
 
 import { ModalWindowContext } from '../../helpers/context/modal.context';
-import {
-  MODAL_DELETE_CONTACT,
-  MODAL_EDIT_CONTACT,
-  MODAL_NEW_CONTACT,
-} from '../../helpers/constants/modalConstants';
+import { ModalConstants } from '../../helpers/constants/modalConstants';
+
 import ContactNewForm from '../../components/ContactNewForm/ContactNewForm';
 import ModalWindow from '../../components/ui/ModalWindow/ModalWindow';
 import ContactList from '../../components/ContactList/ContactList';
@@ -22,8 +19,8 @@ import { Box, Button, Container } from '@mui/material';
 import PersonAddAlt1OutlinedIcon from '@mui/icons-material/PersonAddAlt1Outlined';
 
 function ContactsPage() {
-  const dispatch = useDispatch();
-  const isLoading = useSelector(selectLoading);
+  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(selectLoading);
   const { handleModalOpen } = useContext(ModalWindowContext);
 
   useEffect(() => {
@@ -52,21 +49,21 @@ function ContactsPage() {
           variant="contained"
           startIcon={<PersonAddAlt1OutlinedIcon />}
           sx={{ display: 'flex', margin: '15px auto' }}
-          onClick={() => handleModalOpen(MODAL_NEW_CONTACT)}
+          onClick={() => handleModalOpen(ModalConstants.New)}
           disabled={isLoading}
         >
           new contact
         </Button>
 
-        <ModalWindow title="New" modalType={MODAL_NEW_CONTACT}>
+        <ModalWindow title="New" modalType={ModalConstants.New}>
           <ContactNewForm />
         </ModalWindow>
 
-        <ModalWindow title="Edit" modalType={MODAL_EDIT_CONTACT}>
+        <ModalWindow title="Edit" modalType={ModalConstants.Edit}>
           <ContactEditForm />
         </ModalWindow>
 
-        <ModalWindow title="Delete" modalType={MODAL_DELETE_CONTACT}>
+        <ModalWindow title="Delete" modalType={ModalConstants.Delete}>
           <ContactDeleteForm />
         </ModalWindow>
 

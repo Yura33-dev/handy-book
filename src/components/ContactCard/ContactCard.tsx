@@ -1,13 +1,9 @@
 import { useContext, useState } from 'react';
-import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useAppSelector } from '../../helpers/hooks/reduxHooks';
 import { selectLoading } from '../../redux/contacts/selectors';
 import { useAvatar } from '../../helpers/hooks/useAvatar';
 import { ModalWindowContext } from '../../helpers/context/modal.context';
-import {
-  MODAL_DELETE_CONTACT,
-  MODAL_EDIT_CONTACT,
-} from '../../helpers/constants/modalConstants';
+import { ModalConstants } from '../../helpers/constants/modalConstants';
 
 import {
   Avatar,
@@ -24,11 +20,17 @@ import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
-function ContactCard({ name, number, id }) {
-  const [anchorEl, setAnchorEl] = useState(null);
+type ContactCardProps = {
+  name: string;
+  number: string;
+  id: string;
+};
+
+function ContactCard({ name, number, id }: ContactCardProps) {
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = event => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -38,18 +40,18 @@ function ContactCard({ name, number, id }) {
 
   const { handleModalOpen } = useContext(ModalWindowContext);
 
-  const handleDeleteClick = contactId => {
+  const handleDeleteClick = (contactId: string) => {
     handleMenuClose();
-    handleModalOpen(MODAL_DELETE_CONTACT, contactId);
+    handleModalOpen(ModalConstants.Delete, contactId);
   };
 
-  const handleEditClick = contactId => {
+  const handleEditClick = (contactId: string) => {
     handleMenuClose();
-    handleModalOpen(MODAL_EDIT_CONTACT, contactId);
+    handleModalOpen(ModalConstants.Edit, contactId);
   };
 
   const { avatar } = useAvatar(name);
-  const isLoading = useSelector(selectLoading);
+  const isLoading = useAppSelector(selectLoading);
 
   return (
     <Card variant="outlined" sx={{ flex: '1 1 auto' }}>
@@ -123,11 +125,5 @@ function ContactCard({ name, number, id }) {
     </Card>
   );
 }
-
-ContactCard.propTypes = {
-  name: PropTypes.string,
-  number: PropTypes.string,
-  id: PropTypes.string,
-};
 
 export default ContactCard;

@@ -1,7 +1,11 @@
-import PropTypes from 'prop-types';
 import AppBar from '../AppBar/AppBar';
 
-function Layout({ onCloseSideBar, children }) {
+type LayoutProps = {
+  onCloseSideBar: () => void;
+  children: React.ReactNode;
+};
+
+function Layout({ onCloseSideBar, children }: LayoutProps) {
   return (
     <>
       <AppBar onCloseSideBar={onCloseSideBar} />
@@ -9,10 +13,5 @@ function Layout({ onCloseSideBar, children }) {
     </>
   );
 }
-
-Layout.propTypes = {
-  children: PropTypes.object,
-  onCloseSideBar: PropTypes.func,
-};
 
 export default Layout;

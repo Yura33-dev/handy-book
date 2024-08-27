@@ -34,13 +34,17 @@ export const addContact = createAsyncThunk<
 
 export const deleteContact = createAsyncThunk<
   IContact,
-  string,
+  string | null,
   { rejectValue: string }
 >('contacts/deleteContact', async (contactId, thunkAPI) => {
   try {
-    const response = await axios.delete<IContact>(`/contacts/${contactId}`);
-    console.log(response, response.data);
-    return response.data;
+    if (contactId) {
+      const response = await axios.delete<IContact>(`/contacts/${contactId}`);
+      console.log(response, response.data);
+      return response.data;
+    } else {
+      return thunkAPI.rejectWithValue('There isn`t contact`s ID');
+    }
   } catch (e) {
     const error = e as AxiosError;
     return thunkAPI.rejectWithValue(error.message);

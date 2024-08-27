@@ -1,6 +1,6 @@
 import { useContext, useId } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useFormik } from 'formik';
+import { useAppDispatch, useAppSelector } from '../../helpers/hooks/reduxHooks';
+import { FormikHelpers, useFormik } from 'formik';
 import toast from 'react-hot-toast';
 import { editContact } from '../../redux/contacts/operations';
 import {
@@ -8,7 +8,7 @@ import {
   selectLoading,
 } from '../../redux/contacts/selectors';
 import { ModalWindowContext } from '../../helpers/context/modal.context';
-import { MODAL_EDIT_CONTACT } from '../../helpers/constants/modalConstants';
+import { ModalConstants } from '../../helpers/constants/modalConstants';
 import { addContactSchema as editContactSchema } from '../../helpers/schemasValidation/addContactSchemaValidation';
 import AlertMessage from '../ui/AlertMessage/AlertMessage';
 
@@ -24,21 +24,26 @@ import { Box } from '@mui/system';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 
+interface IFormikValues {
+  name: string;
+  number: string;
+}
+
 function ContactEditForm() {
-  const dispatch = useDispatch();
-  const isLoading = useSelector(selectLoading);
+  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(selectLoading);
   const { getModalData, handleModalClose } = useContext(ModalWindowContext);
 
-  const [contact] = useSelector(
-    selectContactById(getModalData(MODAL_EDIT_CONTACT))
+  const [contact] = useAppSelector(
+    selectContactById(getModalData(ModalConstants.Edit) as string) // try to fix it
   );
 
   const nameFieldId = useId();
   const numberFieldId = useId();
 
-  const initValues = {
-    name: contact?.name || null,
-    number: contact?.number || null,
+  const initValues: IFormikValues = {
+    name: contact?.name || '',
+    number: contact?.number || '',
   };
 
   const formik = useFormik({
@@ -47,14 +52,17 @@ function ContactEditForm() {
     onSubmit: handleSubmit,
   });
 
-  async function handleSubmit(editedContact, actions) {
+  async function handleSubmit(
+    editedContact: IFormikValues,
+    actions: FormikHelpers<IFormikValues>
+  ) {
     try {
       await dispatch(
         editContact({ id: contact.id, ...editedContact })
       ).unwrap();
 
       toast.custom(<AlertMessage message="Contact has been edited" />);
-      handleModalClose(MODAL_EDIT_CONTACT);
+      handleModalClose(ModalConstants.Edit);
       actions.resetForm();
     } catch (error) {
       toast.custom(
@@ -152,7 +160,7 @@ function ContactEditForm() {
 
         <Button
           variant="text"
-          onClick={() => handleModalClose(MODAL_EDIT_CONTACT)}
+          onClick={() => handleModalClose(ModalConstants.Edit)}
           disabled={isLoading}
         >
           Back

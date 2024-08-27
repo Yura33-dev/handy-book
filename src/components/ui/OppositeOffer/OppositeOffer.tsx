@@ -1,10 +1,14 @@
 import { Link as RouterLink } from 'react-router-dom';
 import { Link as MuiLink, Typography } from '@mui/material';
-import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { resetAuthError } from '../../../redux/auth/slice';
 
-function OppositeOffer({ isRegistered, style = null }) {
+type OppositeOfferProps = {
+  isRegistered: boolean;
+  style?: object | null;
+};
+
+function OppositeOffer({ isRegistered, style = null }: OppositeOfferProps) {
   const dispatch = useDispatch();
 
   const displayedTextQuestion = isRegistered
@@ -39,10 +43,5 @@ function OppositeOffer({ isRegistered, style = null }) {
     </Typography>
   );
 }
-
-OppositeOffer.propTypes = {
-  isRegistered: PropTypes.bool,
-  style: PropTypes.object,
-};
 
 export default OppositeOffer;

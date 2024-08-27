@@ -1,13 +1,13 @@
-export function useAvatar(userName) {
-  function stringToColor(string) {
-    if (!string) return '';
+export function useAvatar(userName: string): object {
+  function stringToColor(name: string) {
+    if (!name) return '';
 
     let hash = 0;
     let i;
 
     /* eslint-disable no-bitwise */
-    for (i = 0; i < string.length; i += 1) {
-      hash = string.charCodeAt(i) + ((hash << 5) - hash);
+    for (i = 0; i < name.length; i += 1) {
+      hash = name.charCodeAt(i) + ((hash << 5) - hash);
     }
 
     let color = '#';
@@ -21,8 +21,8 @@ export function useAvatar(userName) {
     return color;
   }
 
-  function generateUserSign(string) {
-    const splitedName = string.toUpperCase().split(' ');
+  function generateUserSign(name: string) {
+    const splitedName = name.toUpperCase().split(' ');
 
     if (splitedName.length === 1) {
       return `${splitedName[0][0]}${splitedName[0][splitedName[0].length - 1]}`;

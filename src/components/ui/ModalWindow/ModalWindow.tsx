@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import PropTypes from 'prop-types';
 import { ModalWindowContext } from '../../../helpers/context/modal.context';
 
 import { Backdrop, Box, Fade, Modal, Typography } from '@mui/material';
+import { ModalConstants } from '../../../helpers/constants/modalConstants';
 
 const style = {
   position: 'absolute',
@@ -20,7 +20,13 @@ const style = {
   justifyContent: 'flex-start',
 };
 
-function ModalWindow({ children, title, modalType }) {
+type ModalWindowProps = {
+  children: React.ReactNode;
+  title: string;
+  modalType: ModalConstants.Delete | ModalConstants.Edit | ModalConstants.New;
+};
+
+function ModalWindow({ children, title, modalType }: ModalWindowProps) {
   const { isModalOpen, handleModalClose } = useContext(ModalWindowContext);
 
   return (
@@ -52,11 +58,5 @@ function ModalWindow({ children, title, modalType }) {
     </Modal>
   );
 }
-
-ModalWindow.propTypes = {
-  children: PropTypes.element,
-  title: PropTypes.string,
-  modalType: PropTypes.string,
-};
 
 export default ModalWindow;

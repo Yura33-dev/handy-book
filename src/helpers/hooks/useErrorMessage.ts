@@ -1,9 +1,10 @@
-import { useSelector } from 'react-redux';
 import { selectIsAuthError } from '../../redux/auth/selectors';
+import { useAppSelector } from './reduxHooks';
 
-export function useErrorMessage(pageType = 'RegisterPage') {
-  const isError = useSelector(selectIsAuthError);
-  if (!isError) return '';
+export function useErrorMessage(pageType: string = 'RegisterPage') {
+  const isError = useAppSelector(selectIsAuthError);
+  if (!isError) return { errorMessage: '' };
+
   let errorMessage;
 
   if (pageType === 'LoginPage') {

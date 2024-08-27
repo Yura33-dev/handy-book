@@ -1,12 +1,11 @@
 import { useContext, useId } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useFormik } from 'formik';
+import { useAppDispatch, useAppSelector } from '../../helpers/hooks/reduxHooks';
+import { FormikHelpers, useFormik } from 'formik';
 import toast from 'react-hot-toast';
 import { addContact } from '../../redux/contacts/operations';
 import { selectLoading } from '../../redux/contacts/selectors';
 import { ModalWindowContext } from '../../helpers/context/modal.context';
 import { addContactSchema } from '../../helpers/schemasValidation/addContactSchemaValidation';
-import { MODAL_NEW_CONTACT } from '../../helpers/constants/modalConstants';
 import AlertMessage from '../ui/AlertMessage/AlertMessage';
 
 import {
@@ -20,17 +19,23 @@ import {
 } from '@mui/material';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
+import { ModalConstants } from '../../helpers/constants/modalConstants';
+
+interface IFormikValues {
+  name: string;
+  number: string;
+}
 
 function ContactNewForm() {
-  const dispatch = useDispatch();
-  const isLoading = useSelector(selectLoading);
+  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(selectLoading);
 
   const { handleModalClose } = useContext(ModalWindowContext);
 
   const nameFieldId = useId();
   const numberFieldId = useId();
 
-  const initValues = { name: '', number: '' };
+  const initValues: IFormikValues = { name: '', number: '' };
 
   const formik = useFormik({
     initialValues: initValues,
@@ -38,12 +43,15 @@ function ContactNewForm() {
     onSubmit: handleSubmit,
   });
 
-  async function handleSubmit(contact, actions) {
+  async function handleSubmit(
+    contact: IFormikValues,
+    actions: FormikHelpers<IFormikValues>
+  ) {
     try {
       await dispatch(addContact(contact)).unwrap();
       actions.resetForm();
       toast.custom(<AlertMessage message="Contact has been added" />);
-      handleModalClose(MODAL_NEW_CONTACT);
+      handleModalClose(ModalConstants.New);
     } catch (error) {
       toast.custom(
         <AlertMessage
@@ -134,7 +142,7 @@ function ContactNewForm() {
 
         <Button
           variant="text"
-          onClick={() => handleModalClose(MODAL_NEW_CONTACT)}
+          onClick={() => handleModalClose(ModalConstants.New)}
         >
           Back
         </Button>

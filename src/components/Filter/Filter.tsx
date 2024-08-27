@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../helpers/hooks/reduxHooks';
 import { selectFilterValue } from '../../redux/filters/selectors';
 import { changeFilter } from '../../redux/filters/slice';
 import TypographyHeader from '../ui/TypographyHeader/TypographyHeader';
@@ -7,9 +7,9 @@ import { Divider, Skeleton, TextField } from '@mui/material';
 import { selectLoading } from '../../redux/contacts/selectors';
 
 function Filter() {
-  const filterValue = useSelector(selectFilterValue);
-  const isLoading = useSelector(selectLoading);
-  const dispatch = useDispatch();
+  const filterValue = useAppSelector(selectFilterValue);
+  const isLoading = useAppSelector(selectLoading);
+  const dispatch = useAppDispatch();
 
   return (
     <>
@@ -34,7 +34,9 @@ function Filter() {
           size="small"
           sx={{ mb: 3 }}
           value={filterValue}
-          onInput={e => dispatch(changeFilter(e.target.value))}
+          onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+            dispatch(changeFilter(e.target.value))
+          }
         />
       )}
 

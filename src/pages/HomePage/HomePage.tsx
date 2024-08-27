@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../helpers/hooks/reduxHooks';
 import { Link as RouterLink } from 'react-router-dom';
 import OppositeOffer from '../../components/ui/OppositeOffer/OppositeOffer';
 import { selectIsLoggedIn } from '../../redux/auth/selectors';
@@ -7,7 +7,7 @@ import { Box, Button, Container, Typography } from '@mui/material';
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 
 function HomePage() {
-  const isLogged = useSelector(selectIsLoggedIn);
+  const isLogged = useAppSelector(selectIsLoggedIn);
 
   return (
     <Box component="section" sx={{ backgroundColor: 'background.default' }}>

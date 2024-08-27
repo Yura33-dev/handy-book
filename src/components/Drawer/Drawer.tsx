@@ -1,6 +1,5 @@
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useAppDispatch } from '../../helpers/hooks/reduxHooks';
 import { logout } from '../../redux/auth/operations';
 
 import {
@@ -15,8 +14,16 @@ import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { ListItemIcon } from '@mui/material';
 
-const TemporaryDrawer = ({ isActive, onCloseSideBar }) => {
-  const dispatch = useDispatch();
+type TemporaryDrawerProps = {
+  isActive: boolean;
+  onCloseSideBar: () => void;
+};
+
+const TemporaryDrawer = ({
+  isActive,
+  onCloseSideBar,
+}: TemporaryDrawerProps) => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handeLogoutClick = () => {
@@ -58,11 +65,6 @@ const TemporaryDrawer = ({ isActive, onCloseSideBar }) => {
       {DrawerList}
     </Drawer>
   );
-};
-
-TemporaryDrawer.propTypes = {
-  isActive: PropTypes.bool,
-  onCloseSideBar: PropTypes.func,
 };
 
 export default TemporaryDrawer;

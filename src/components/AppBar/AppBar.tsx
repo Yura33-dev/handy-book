@@ -1,6 +1,5 @@
 import { Link as RouterLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useAppSelector } from '../../helpers/hooks/reduxHooks';
 import { selectIsLoggedIn, selectUser } from '../../redux/auth/selectors';
 import {
   AppBar as MuiAppBar,
@@ -13,9 +12,13 @@ import MobileMenuBtn from '../ui/MobileMenuBtn/MobileMenuBtn';
 import MainHeader from '../ui/MainHeader/MainHeader';
 import { useAvatar } from '../../helpers/hooks/useAvatar';
 
-function AppBar({ onCloseSideBar }) {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  const user = useSelector(selectUser);
+type AppBarProps = {
+  onCloseSideBar: () => void;
+};
+
+function AppBar({ onCloseSideBar }: AppBarProps) {
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const user = useAppSelector(selectUser);
   const { avatar } = useAvatar(user.name);
 
   return (
@@ -53,10 +56,5 @@ function AppBar({ onCloseSideBar }) {
     </MuiAppBar>
   );
 }
-
-AppBar.propTypes = {
-  children: PropTypes.element,
-  onCloseSideBar: PropTypes.func,
-};
 
 export default AppBar;

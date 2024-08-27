@@ -1,8 +1,11 @@
 import { IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import PropTypes from 'prop-types';
 
-function MobileMenuBtn({ onCloseSideBar }) {
+type MobileMenuBtnProps = {
+  onCloseSideBar: () => void;
+};
+
+function MobileMenuBtn({ onCloseSideBar }: MobileMenuBtnProps) {
   return (
     <IconButton
       size="large"
@@ -16,9 +19,4 @@ function MobileMenuBtn({ onCloseSideBar }) {
     </IconButton>
   );
 }
-
-MobileMenuBtn.propTypes = {
-  onCloseSideBar: PropTypes.func,
-};
-
 export default MobileMenuBtn;

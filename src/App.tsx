@@ -1,8 +1,8 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { refreshUser } from './redux/auth/operations';
 import { selectIsLoggedIn, selectIsRefreshing } from './redux/auth/selectors';
+import { useAppDispatch, useAppSelector } from './helpers/hooks/reduxHooks';
 
 import Layout from './components/Layout/Layout';
 import AppLoader from './components/ui/AppLoader/AppLoader';
@@ -11,18 +11,18 @@ import { RestrictedRoute } from './RestrictedRoute';
 import { PrivateRoute } from './PrivateRoute';
 
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
-const RegistrationPage = lazy(() =>
-  import('./pages/RegistrationPage/RegistrationPage')
+const RegistrationPage = lazy(
+  () => import('./pages/RegistrationPage/RegistrationPage')
 );
 const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
 const ContactsPage = lazy(() => import('./pages/ContactsPage/ContactsPage'));
 
 function App() {
-  const [activeSideBar, setActiveSideBar] = useState(false);
+  const [activeSideBar, setActiveSideBar] = useState<boolean>(false);
 
-  const dispatch = useDispatch();
-  const isRefreshing = useSelector(selectIsRefreshing);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const dispatch = useAppDispatch();
+  const isRefreshing = useAppSelector(selectIsRefreshing);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   useEffect(() => {
     dispatch(refreshUser());

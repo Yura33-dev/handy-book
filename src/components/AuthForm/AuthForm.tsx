@@ -1,9 +1,12 @@
 import { useId, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useFormik } from 'formik';
-import PropTypes from 'prop-types';
+import { useAppDispatch, useAppSelector } from '../../helpers/hooks/reduxHooks';
+import { FormikHelpers, useFormik } from 'formik';
 import { login, register } from '../../redux/auth/operations';
 import { selectIsLoading } from '../../redux/auth/selectors';
+import {
+  loginSchema,
+  registerSchema,
+} from '../../helpers/schemasValidation/authSchemasValidation';
 
 import {
   Box,
@@ -19,18 +22,25 @@ import AlternateEmailOutlinedIcon from '@mui/icons-material/AlternateEmailOutlin
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import {
-  loginSchema,
-  registerSchema,
-} from '../../helpers/schemasValidation/authSchemasValidation';
 
-function AuthForm({ authType }) {
-  const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
+type AuthFormProps = {
+  authType: string;
+};
 
-  const [showPass, setShowPass] = useState(false);
+interface IFormikValues {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+function AuthForm({ authType }: AuthFormProps) {
+  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(selectIsLoading);
+
+  const [showPass, setShowPass] = useState<boolean>(false);
   const handleClickShowPass = () => setShowPass(show => !show);
-  const handleMouseDownPassword = event => {
+  const handleMouseDownPassword = (event: React.MouseEvent) => {
     event.preventDefault();
   };
 
@@ -39,35 +49,42 @@ function AuthForm({ authType }) {
   const passwordFieldId = useId();
   const confirmPasswordFieldId = useId();
 
-  const initValues = { name: '', email: '', password: '', confirmPassword: '' };
+  const initValues: IFormikValues = {
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  };
 
   const validationSchema =
     authType === 'Register' ? registerSchema : loginSchema;
 
-  function handleSubmit(credentials, actions) {
-    switch (authType) {
-      case 'Register':
-        dispatch(
-          register({
-            name: credentials.name,
-            email: credentials.email,
-            password: credentials.password,
-          })
-        );
-        break;
-      case 'Login':
-        dispatch(
-          login({ email: credentials.email, password: credentials.password })
-        );
-        break;
-    }
-    actions.resetForm();
-  }
   const formik = useFormik({
     initialValues: initValues,
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
   });
+
+  function handleSubmit(
+    values: IFormikValues,
+    actions: FormikHelpers<IFormikValues>
+  ) {
+    switch (authType) {
+      case 'Register':
+        dispatch(
+          register({
+            name: values.name,
+            email: values.email,
+            password: values.password,
+          })
+        );
+        break;
+      case 'Login':
+        dispatch(login({ email: values.email, password: values.password }));
+        break;
+    }
+    actions.resetForm();
+  }
 
   const isScreenXS = useMediaQuery('(max-width:600px)');
   const circularProgressProp = {
@@ -219,9 +236,5 @@ function AuthForm({ authType }) {
     </Box>
   );
 }
-
-AuthForm.propTypes = {
-  authType: PropTypes.string,
-};
 
 export default AuthForm;

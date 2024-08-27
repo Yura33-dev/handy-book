@@ -1,7 +1,10 @@
-import PropTypes from 'prop-types';
 import { Typography } from '@mui/material';
 
-function ErrorMessage({ message }) {
+type ErrorMessageProps = {
+  message: string;
+};
+
+function ErrorMessage({ message }: ErrorMessageProps) {
   return (
     <Typography
       paragraph
@@ -16,9 +19,5 @@ function ErrorMessage({ message }) {
     </Typography>
   );
 }
-
-ErrorMessage.propTypes = {
-  message: PropTypes.string,
-};
 
 export default ErrorMessage;

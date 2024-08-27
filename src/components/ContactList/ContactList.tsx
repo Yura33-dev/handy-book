@@ -1,9 +1,10 @@
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../helpers/hooks/reduxHooks';
 import {
   selectFilteredContacts,
   selectIsContactsFetching,
 } from '../../redux/contacts/selectors';
 import ContactCard from '../ContactCard/ContactCard';
+import TypographyHeader from '../ui/TypographyHeader/TypographyHeader';
 
 import {
   Card,
@@ -14,19 +15,17 @@ import {
   Stack,
   useMediaQuery,
 } from '@mui/material';
-import TypographyHeader from '../ui/TypographyHeader/TypographyHeader';
 
 function ContactList() {
-  const contacts = useSelector(selectFilteredContacts);
-  const isContactsFetching = useSelector(selectIsContactsFetching);
+  const contacts = useAppSelector(selectFilteredContacts);
+  const isContactsFetching = useAppSelector(selectIsContactsFetching);
   const isMobile = useMediaQuery('(max-width:600px)');
 
   const generateCardSkeletons = () => {
-    const cardSkeletons = [];
-
-    for (let i = 0; i < 3; i++) {
-      cardSkeletons.push(
-        <Card variant="outlined" sx={{ flex: '1 1 auto' }} key={i}>
+    const cardSkeletons = Array(3)
+      .fill(0)
+      .map((item, index) => (
+        <Card variant="outlined" sx={{ flex: '1 1 auto' }} key={index}>
           <CardHeader
             avatar={
               <Skeleton
@@ -48,8 +47,7 @@ function ContactList() {
             sx={{ overflow: 'hidden' }}
           />
         </Card>
-      );
-    }
+      ));
 
     return cardSkeletons;
   };
