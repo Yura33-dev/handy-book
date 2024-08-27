@@ -1,6 +1,8 @@
-export function useAvatar(userName: string): object {
+export function useAvatar(userName: string): {
+  avatar: { sx: object; children: string };
+} {
   function stringToColor(name: string) {
-    if (!name) return '';
+    if (!name || name.length < 2) return '#bdbdbd';
 
     let hash = 0;
     let i;
@@ -38,7 +40,8 @@ export function useAvatar(userName: string): object {
       width: { xs: 30, md: 40 },
       height: { xs: 30, md: 40 },
     },
-    children: userName ? generateUserSign(userName) : 'null',
+    children:
+      userName && userName.length >= 2 ? generateUserSign(userName) : 'null',
   };
 
   return { avatar };

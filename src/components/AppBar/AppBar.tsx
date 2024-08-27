@@ -19,7 +19,7 @@ type AppBarProps = {
 function AppBar({ onCloseSideBar }: AppBarProps) {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const user = useAppSelector(selectUser);
-  const { avatar } = useAvatar(user.name);
+  const { avatar } = useAvatar(user.name ?? '');
 
   return (
     <MuiAppBar position="static">

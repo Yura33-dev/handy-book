@@ -1,8 +1,8 @@
 import { Alert, AlertColor } from '@mui/material';
 
 type AlertMessageProps = {
-  severity: AlertColor;
   message: string;
+  severity?: AlertColor;
 };
 
 function AlertMessage({ severity = 'success', message }: AlertMessageProps) {
